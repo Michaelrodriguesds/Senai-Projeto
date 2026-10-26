@@ -1,0 +1,78 @@
+.botes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    
+}
+
+button {
+    padding: 15px;
+    border-radius: 8px;
+    transition: 0.2s;
+    border: none;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: rgb(161, 156, 156);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.limpar {
+    background-color: lightcoral;
+    color: white;
+}
+
+.operacao {
+    background-color: orange;
+    color: white;
+}
+
+.operacao:hover {
+    background-color: darkorange;
+}
+
+.igual {
+    grid-column: 1 / -1;
+    background-color: orange;
+}
+
+body {
+    display: flex;
+    /* Ativa o Flexbox */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    min-height: 100vh;
+    /* Garante altura mínima da janela */
+    align-items: center;
+    /* Centraliza verticalmente */
+}
+
+.containe {
+    background-color: lightgray;
+    /* Fundo cinza */
+    padding: 30px;
+    /* Espaço interno */
+    border-radius: 12px;
+    /* Cantos arredondados */
+    width: 200px;
+}
+
+.tela {
+    background-color: #222222;
+    padding: 15px;
+    margin: 10px 0 15px;
+    /* 10px acima, 0 nas laterais e 15px abaixo */
+    height: auto;
+    border-radius: 8px;
+}
+
+.resultado {
+    text-align: right;
+    font-size: 24px;
+    color: white;
+    padding: 5px;
+}
