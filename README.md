@@ -1,4 +1,4 @@
-@'
+
 # 🧮 Calculadora
 
 Calculadora web feita com **HTML, CSS e JavaScript**, desenvolvida como projeto do curso de **Desenvolvedor de Sistemas do SENAI**.
@@ -52,7 +52,7 @@ Calculadora web feita com **HTML, CSS e JavaScript**, desenvolvida como projeto 
 ## 🚀 Como executar
 
 Baixe o projeto, abra o `index.html` no navegador ou acesse o link acima.
-'@ | Set-Content README.md -Encoding utf8
+ | Set-Content README.md -Encoding utf8
 
 git add README.md
 git commit -m "Atualiza README com relatório do projeto"
