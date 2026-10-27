@@ -1,17 +1,20 @@
 // Seleciona o elemento HTML onde o resultado será exibido
 const tela = document.getElementById('resultado');
 
-// Guarda o sinal da operação escolhida (ex: '+'). Começa vazio: nenhuma operação pendente
+// Guarda o sinal da operação escolhida (ex: '+'). Vazio = nenhuma operação pendente
 let operacao = '';
 
-// Guarda o primeiro número da conta. Começa como null: ainda não existe
+// Guarda o primeiro número da conta, já convertido para número
 let valorA = null;
 
 // Guarda o segundo número da conta, lido da tela no momento do =
 let valorB = null;
 
-// Guarda o resultado da conta, para ser mostrado na tela
+// Guarda o resultado da conta
 let resultadoConta = null;
+
+// Indica se o próximo número digitado é o primeiro dígito do segundo número
+let digitandoSegundo = false;
 
 // Seleciona todos os elementos HTML que possuem a classe 'numero'
 const numero = document.getElementsByClassName('numero');
@@ -22,8 +25,8 @@ const botaoLimpar = document.querySelector('.limpar');
 // Seleciona todos os elementos HTML que possuem a classe 'ponto'
 const addPonto = document.getElementsByClassName('ponto');
 
-// Seleciona todos os botões com a classe 'operacao' (/, X, -, +, =).
-// Todas as variáveis abaixo guardam a MESMA coleção; só o índice muda.
+// Seleciona os botões com a classe 'operacao' (/, X, -, +, =).
+// Todas as variáveis guardam a MESMA coleção; só o índice muda.
 // Ordem: [0] = /, [1] = X, [2] = -, [3] = +, [4] = =
 const addMais = document.getElementsByClassName('operacao');
 const addMenos = document.getElementsByClassName('operacao');
@@ -41,9 +44,20 @@ function mostranume(e) {
     // Guarda o texto do botão numérico que foi clicado
     let numClick = e.target.textContent;
 
-    // Se existe uma operação pendente, o número digitado substitui a tela
+    // Se existe uma operação pendente, estamos digitando o segundo número
     if (operacao) {
-        tela.textContent = numClick;
+
+        // O primeiro dígito do segundo número substitui a tela
+        if (digitandoSegundo) {
+            tela.textContent = numClick;
+
+            // Os próximos dígitos devem ser juntados
+            digitandoSegundo = false;
+
+        } else {
+            // Junta o dígito ao que já está na tela
+            tela.textContent = textoAtual + numClick;
+        }
 
     } else {
 
@@ -63,7 +77,7 @@ function mostranume(e) {
 
 
 // Função responsável por calcular o resultado ao clicar em =
-function calcularResultado () {
+function calcularResultado() {
 
     // Se não existe operação pendente, o = não faz nada
     if (operacao === '') {
@@ -73,13 +87,11 @@ function calcularResultado () {
     // Lê o segundo número da tela e converte para número
     valorB = Number(tela.textContent.trim());
 
-    // valorA foi guardado como texto no clique em operação, então converte aqui
-    valorA = Number(valorA);
-
     // Divisão por zero: mostra a mensagem, limpa a operação e encerra a função
     if (operacao === '/' && valorB === 0) {
         tela.textContent = "OP INVALIDA";
         operacao = '';
+        digitandoSegundo = false;
         return;
     }
 
@@ -99,14 +111,22 @@ function calcularResultado () {
 
     // A operação já foi feita, então ela deixa de estar pendente
     operacao = '';
+    digitandoSegundo = false;
 }
 
 
 // Função responsável por limpar a calculadora
 function limparTela() {
 
-    // Substitui o conteúdo atual da tela pelo número zero
+    // Volta a tela para zero
     tela.textContent = "0";
+
+    // Apaga todo o estado da conta
+    operacao = '';
+    valorA = null;
+    valorB = null;
+    resultadoConta = null;
+    digitandoSegundo = false;
 }
 
 
@@ -131,62 +151,41 @@ function mostrarPonto() {
 // Função responsável por guardar a operação clicada e o primeiro número
 function mostrarOperacao(e) {
 
-    // Guarda o sinal clicado (ex: '+', '-', 'X', '/') em operacao
+    // Guarda o sinal clicado (ex: '+', '-', 'X', '/')
     operacao = e.target.textContent;
 
-    // Guarda o número que está na tela como primeiro número da conta
-    valorA = tela.textContent.trim();
+    // Guarda o número que está na tela como primeiro número, já convertido
+    valorA = Number(tela.textContent.trim());
 
-    // Mostra o valor guardado no console, para conferir
-    console.log(valorA);
-    console.log(operacao);
+    // Avisa que o próximo número digitado é o segundo número da conta
+    digitandoSegundo = true;
 }
 
 
-// Adiciona um evento de clique ao primeiro botão numérico
-// Quando o botão é clicado, chama a função mostranume
+// Adiciona um evento de clique a cada botão numérico
+// Todos chamam a mesma função, mostranume
 numero[0].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao segundo botão numérico
 numero[1].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao terceiro botão numérico
 numero[2].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao quarto botão numérico
 numero[3].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao quinto botão numérico
 numero[4].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao sexto botão numérico
 numero[5].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao sétimo botão numérico
 numero[6].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao oitavo botão numérico
 numero[7].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao nono botão numérico
 numero[8].addEventListener('click', mostranume);
-
-// Adiciona um evento de clique ao décimo botão numérico
 numero[9].addEventListener('click', mostranume);
 
-// Adiciona um evento de clique ao botão C para limpar a tela
+// Botão C limpa a calculadora
 botaoLimpar.addEventListener('click', limparTela);
 
-// Adiciona um evento de clique ao botão de ponto decimal
-// O índice [0] acessa o primeiro elemento da coleção addPonto
+// Botão de ponto decimal
 addPonto[0].addEventListener('click', mostrarPonto);
 
-// Botões de operação: todos chamam mostrarOperacao, que guarda o sinal
-// Por enquanto, - / X também guardam o sinal, mas só a soma está implementada
+// Botões de operação guardam o sinal e o primeiro número
 addMais[3].addEventListener('click', mostrarOperacao);
 addMenos[2].addEventListener('click', mostrarOperacao);
 addDividi[0].addEventListener('click', mostrarOperacao);
 addMult[1].addEventListener('click', mostrarOperacao);
 
-// O botão = chama calcularResultado, que faz a conta e mostra o resultado
+// Botão = faz a conta e mostra o resultado
 botaoIgual[4].addEventListener('click', calcularResultado);
