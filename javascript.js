@@ -65,20 +65,34 @@ function mostranume(e) {
 // Função responsável por calcular o resultado ao clicar em =
 function calcularResultado () {
 
-    // Se não existe operação pendente, o = não faz nada.
-    // operacao === '' significa "nenhum sinal foi guardado".
+    // Se não existe operação pendente, o = não faz nada
     if (operacao === '') {
         return;
     }
 
-    // Lê o segundo número da tela (ex: "3") e converte para número (3)
+    // Lê o segundo número da tela e converte para número
     valorB = Number(tela.textContent.trim());
 
-    // valorA foi guardado como texto no clique em +, então converte aqui
+    // valorA foi guardado como texto no clique em operação, então converte aqui
     valorA = Number(valorA);
 
-    // Faz a conta. Por enquanto só o + está implementado.
-    resultadoConta = valorA + valorB;
+    // Divisão por zero: mostra a mensagem, limpa a operação e encerra a função
+    if (operacao === '/' && valorB === 0) {
+        tela.textContent = "OP INVALIDA";
+        operacao = '';
+        return;
+    }
+
+    // Escolhe a conta de acordo com o sinal
+    if (operacao === '-') {
+        resultadoConta = valorA - valorB;
+    } else if (operacao === 'X') {
+        resultadoConta = valorA * valorB;
+    } else if (operacao === '/') {
+        resultadoConta = valorA / valorB;
+    } else {
+        resultadoConta = valorA + valorB;
+    }
 
     // Mostra o resultado na tela
     tela.textContent = resultadoConta;
