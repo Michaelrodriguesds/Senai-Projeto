@@ -49,6 +49,17 @@ body {
     /* Garante altura mínima da janela */
     align-items: center;
     /* Centraliza verticalmente */
+
+    /* define a imagem de fundo */
+    background-image: url("fundo.png"); 
+    /* faz a imagem preencher a página */
+    background-size: cover; 
+    /* centraliza a imagem */               
+    background-position: center; 
+    /* impede que a imagem se repita */          
+    background-repeat: no-repeat;
+    /* mantém o fundo parado durante a rolagem */          
+    background-attachment: fixed;          
 }
 
 .containe {
