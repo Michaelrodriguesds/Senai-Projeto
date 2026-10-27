@@ -25,3 +25,7 @@ git add README.md
 git commit -m "Adiciona README"
 git remote set-url origin https://github.com/Michaelrodriguesds/Senai-Projeto.git
 git push -u origin main
+
+## Ver online
+
+https://michaelrodriguesds.github.io/Senai-Projeto/
